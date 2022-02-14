@@ -12,6 +12,7 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
 import settings
+from utils import request_location
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
@@ -35,14 +36,20 @@ def start(update: Update, context: CallbackContext) -> None:
 
 
 def link(update: Update, context: CallbackContext) -> None:
-    """Get list of the nearest ATMs, of the Link network."""
-    message = (
-        'Get list of nearest ATMs, of the Link network\.'
-    )
+    """Get list of the nearest ATMs of the user, of the Link network."""
 
-    update.message.reply_markdown_v2(
-        message
-    )
+    location = update.message.location
+
+    if not location:
+        request_location(update)
+    else:
+        message = (
+            'Get list of nearest ATMs, of the Link network\.'
+        )
+
+        update.message.reply_markdown_v2(
+            message
+        )
 
 
 def banelco(update: Update, context: CallbackContext) -> None:
@@ -64,6 +71,11 @@ def not_get_command(update: Update, context: CallbackContext) -> None:
     )
 
 
+def location_callback(update: Update, context: CallbackContext) -> None:
+    # TODO, this could comeback to link or banelco
+    link(update, context)
+
+
 def main() -> None:
     """Start the bot."""
     updater = Updater(settings.TOKEN)
@@ -72,6 +84,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler(["start", "help"], start))
     dispatcher.add_handler(CommandHandler("link", link))
     dispatcher.add_handler(CommandHandler("banelco", banelco))
+    dispatcher.add_handler(MessageHandler(Filters.location, location_callback))
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, not_get_command))
 
     updater.start_polling()
