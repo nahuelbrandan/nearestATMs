@@ -1,13 +1,14 @@
 # nearestATMs
 
-**NearestATMs** is a Telegram bot, fot get a list of the nearest ATMs, taking into account your current position.
+**NearestATMs** is a Telegram bot, fot get a list of the nearest ATMs, 
+taking into account the location of the user.
 
 ## Details
 
 Telegram bot, build using Python.
 
 For the moment, only take in account the ATMs situated in 
-[*Autonomous City of Buenos Aires (CABA) - Argentina*](https://en.wikipedia.org/wiki/Buenos_Aires)
+[*Autonomous City of Buenos Aires (CABA) - Argentina*](https://en.wikipedia.org/wiki/Buenos_Aires).
 
 You can use this bot [here](TODO).
 
@@ -19,13 +20,14 @@ You can use this bot [here](TODO).
 
 * Clone this repo
 * It's recommended create and activate a virtual environment
-* `pip install -r requirements.txt`
+* `make init`
 * Register a new bot in Telegram, you can doit using [BotFather](http://t.me/BotFather). 
-This will give you a token that identify your bot, put that token value in [settings.py](./settings.py)
+This will give you a token that identify your bot, put that token value in the setting TOKEN in [settings.py](nearest_atms/settings.py)
+* `make install`
 
 ## Run
 
-* `python main.py`
+* `make run` Whit this, a server for the bot will be up and running.
 * Now you can go to Telegram, to the chat with you new bot, that you registered in installation step, and start using it.
 
 ## Using
@@ -35,6 +37,10 @@ You can define which of this networks you want to search.
 
 * **/link** get up to 3 ATMs nearest, of the link network
 * **/banelco** get up to 3 ATMs nearest, of the banelco network
+
+## Test
+
+Run the unit tests with: `make test`
 
 ## TODO
 

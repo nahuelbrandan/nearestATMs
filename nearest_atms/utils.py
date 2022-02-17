@@ -1,4 +1,6 @@
 """Utils functions."""
+import logging
+
 from telegram import ReplyKeyboardMarkup, KeyboardButton
 
 
@@ -10,3 +12,11 @@ def request_location(update):
         "Would you mind sharing your location with me?",
         reply_markup=reply_markup,
     )
+
+
+def get_logger():
+    logging.basicConfig(
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
+    )
+
+    return logging.getLogger(__name__)

@@ -6,19 +6,15 @@ the Dispatcher and registered at their respective places.
 Then, the bot is started and runs until we press Ctrl-C on the command line.
 """
 
-import logging
-
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-import settings
-from utils import request_location
+from nearest_atms import settings
+from nearest_atms.atm_manager import ATMManager
+from nearest_atms.utils import request_location, get_logger
 
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
-)
-
-logger = logging.getLogger(__name__)
+logger = get_logger()
+atm = ATMManager()
 
 
 def start(update: Update, context: CallbackContext) -> None:
@@ -43,6 +39,7 @@ def link(update: Update, context: CallbackContext) -> None:
     if not location:
         request_location(update)
     else:
+        _ = atm.get_nearest_link_atms(location)
         message = (
             'Get list of nearest ATMs, of the Link network\.'
         )
