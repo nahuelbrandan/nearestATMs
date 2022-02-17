@@ -8,10 +8,7 @@ run:
 	nearestATMs
 
 test:
-	pytest -v
-
-coverage:
-	coverage run -m pytest
+	pytest -v --cov=nearest_atms tests/
 
 help:
 	python setup.py --help-commands

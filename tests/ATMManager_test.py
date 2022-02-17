@@ -1,10 +1,9 @@
 """Tests of ATTMs Manager."""
-from unittest import TestCase
 
 from nearest_atms.atm_manager import ATMManager
 
 
-class TestATMManager(TestCase):
+class TestATMManager:
     atm_manager = ATMManager()
 
     def test_init(self):

@@ -1,0 +1,7 @@
+[run]
+omit = [manage.py]
+
+[report]
+skip_covered = True
+skip_empty = True
+show_missing = True

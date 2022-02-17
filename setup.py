@@ -38,6 +38,7 @@ setup(
     entry_points={
         'console_scripts': ['nearestATMs=nearest_atms.main:main']
     },
+    test_suite="tests",
     platforms="any",
     classifiers=[
         "Development Status :: 1 - Development",
