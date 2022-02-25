@@ -1,8 +1,8 @@
 """
 Nearest ATMs - Telegram bot.
 
-First, a few handler functions are defined. Then, those functions are passed to
-the Dispatcher and registered at their respective places.
+First, a few handler functions are defined.
+Then, those functions are passed to the Dispatcher and registered at their respective places.
 Then, the bot is started and runs until we press Ctrl-C on the command line.
 """
 
@@ -31,33 +31,31 @@ def start(update: Update, context: CallbackContext) -> None:
     )
 
 
-def link(update: Update, context: CallbackContext) -> None:
+def nearest_atm(update: Update, context: CallbackContext) -> None:
     """Get list of the nearest ATMs of the user, of the Link network."""
-
     location = update.message.location
 
     if not location:
+        context.user_data["network_atm_requested"] = update.message.text
         request_location(update)
     else:
-        _ = atm.get_nearest_link_atms(location)
-        message = (
-            'Get list of nearest ATMs, of the Link network\.'
-        )
+        if context.user_data["network_atm_requested"].lower() == '/link':
+            nearest_link_atms = atm.get_nearest_link_atms(location)
+        else:
+            nearest_link_atms = atm.get_nearest_banelco_atms(location)
+
+        if not nearest_link_atms:
+            message = (
+                'we did not find an ATM near you\.'
+            )
+        else:
+            message = (
+                'We find the next ATMs near you: {}'.format(nearest_link_atms)
+            )
 
         update.message.reply_markdown_v2(
             message
         )
-
-
-def banelco(update: Update, context: CallbackContext) -> None:
-    """Get list of the nearest ATMs, of the Banelco network."""
-    message = (
-        'Get list of nearest ATMs, of the Banelco network\.'
-    )
-
-    update.message.reply_markdown_v2(
-        message
-    )
 
 
 def not_get_command(update: Update, context: CallbackContext) -> None:
@@ -69,8 +67,8 @@ def not_get_command(update: Update, context: CallbackContext) -> None:
 
 
 def location_callback(update: Update, context: CallbackContext) -> None:
-    # TODO, this could comeback to link or banelco
-    link(update, context)
+    """Get the location of the user and continue the process view."""
+    nearest_atm(update, context)
 
 
 def main() -> None:
@@ -79,8 +77,8 @@ def main() -> None:
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(CommandHandler(["start", "help"], start))
-    dispatcher.add_handler(CommandHandler("link", link))
-    dispatcher.add_handler(CommandHandler("banelco", banelco))
+    dispatcher.add_handler(CommandHandler("link", nearest_atm))
+    dispatcher.add_handler(CommandHandler("banelco", nearest_atm))
     dispatcher.add_handler(MessageHandler(Filters.location, location_callback))
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, not_get_command))
 

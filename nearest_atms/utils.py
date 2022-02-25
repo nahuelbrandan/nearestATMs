@@ -5,7 +5,7 @@ from telegram import ReplyKeyboardMarkup, KeyboardButton
 
 
 def request_location(update):
-    location_keyboard = KeyboardButton(text="send_location", request_location=True)  # creating location button object
+    location_keyboard = KeyboardButton(text="send location", request_location=True)  # creating location button object
     custom_keyboard = [[location_keyboard]]  # creating keyboard object
     reply_markup = ReplyKeyboardMarkup(custom_keyboard)
     update.message.reply_text(
@@ -14,7 +14,12 @@ def request_location(update):
     )
 
 
-def get_logger():
+def get_logger() -> logging.Logger:
+    """Create a logger object.
+
+    Returns:
+        Logger: logger object.
+    """
     logging.basicConfig(
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
     )
