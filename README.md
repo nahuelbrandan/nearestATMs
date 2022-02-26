@@ -12,9 +12,11 @@ For the moment, only take in account the ATMs situated in
 
 You can use this bot [here](https://t.me/nearest_ATMs_bot).
 
-Demo:
+### Demo
 
+<p align="center">
 <img src="./resources/demo.gif" width="270" alt="demo">
+</p>
 
 ## Requirements
 
@@ -52,10 +54,11 @@ Run the unit tests with: `make test`
 * [x] ATMs must be listed less than 500m away from the user (distance
 geographical direct to the user, without considering streets)
 * [x] A maximum of 3 ATMs must be listed
-* [ ] Each ATM must indicate its address and its respective bank
+* [x] Each ATM must indicate its address and its respective bank
 * [ ] The search algorithm for nearby ATMs must implement a solution
 better than linear in the average case
 * [ ] Interactive map, with the points of the ATMs and the person
 * Tests
   * [ ] Command case-insensitive
+  * [ ] Integration tests
 * [ ] Deploy in a server, could be in GCP.
