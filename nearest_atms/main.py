@@ -49,9 +49,9 @@ def nearest_atm(update: Update, context: CallbackContext) -> None:
                 'we did not find an ATM near you\.'
             )
         else:
-            message = (
-                'We find the next ATMs near you: {}'.format(nearest_link_atms)
-            )
+            message = 'We find the next ATMs near you:\n\n'
+            for e in nearest_link_atms:
+                message += '\- {}\, dir: {}\.\n'.format(e[3], e[5])
 
         update.message.reply_markdown_v2(
             message

@@ -37,16 +37,13 @@ class ATMManager:
             atm_coords = (float(i[self.longitude_index]), float(i[self.latitude_index]))
 
             distance_from_user_to_atm = distance(user_coords, atm_coords).km
-
             if distance_from_user_to_atm > settings.MAX_DISTANCE:
                 continue
 
             response.append((distance_from_user_to_atm, i))
 
         response = sorted(response, key=lambda x: x[0])
-
         response = response[:3]
-
         response = [x[1] for x in response]
 
         return response
@@ -68,16 +65,13 @@ class ATMManager:
             atm_coords = (float(i[self.longitude_index]), float(i[self.latitude_index]))
 
             distance_from_user_to_atm = distance(user_coords, atm_coords).km
-
             if distance_from_user_to_atm > settings.MAX_DISTANCE:
                 continue
 
             response.append((distance_from_user_to_atm, i))
 
         response = sorted(response, key=lambda x: x[0])
-
         response = response[:3]
-
         response = [x[1] for x in response]
 
         return response
